@@ -11,9 +11,10 @@ config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkh
 
 
 class plant:
-    def __init__(self, botName, family="MXX", parents="AA", ID=0):
+    def __init__(self, botName, family="--", genus="--", species="MXX", parents="AA", ID=0):
         self.family = family
-        self.genus = "--"
+        self.genus = genus
+        self.species = species
         self.parents = parents
         self.number = ID
 
@@ -24,7 +25,7 @@ class plant:
 
 
     def makeID(self):
-        self.id = self.order + self.family + self.parents + "0"*(4-len(str(self.number))) + str(self.number)
+        self.id = self.family + self.genus + self.species + self.parents + "0"*(4-len(str(self.number))) + str(self.number)
 
     def addPicture(self, pic):
         self.pictures.append(pic)
@@ -38,11 +39,15 @@ class plant:
 
         pdfkit.from_string(output_text, 'pdf_generated.pdf', configuration=config)
 
+class Aizoaceae(plant):
+    def __init__(self, botName, genus="--", species="MXX", parents="AA", ID=0):
+        super().__init__(botName, family="AZ", genus=genus, species=species, parents=parents, ID=ID)
 
-class lithop(plant):
-    def __init__(self, botName, family="MXX",parents="AA", ID=0):
-        super().__init__(botName, family=family, parents=parents, ID=ID)
-        self.order = "LI"
+
+class lithop(Aizoaceae):
+    def __init__(self, botName, species="MXX", parents="AA", ID=0):
+        super().__init__(botName, genus="LI", species=species, parents=parents, ID=ID)
+
 
 
 # class
