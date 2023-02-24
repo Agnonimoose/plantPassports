@@ -1,22 +1,21 @@
 
 import jinja2
 import pdfkit
+import os
 
-template_loader = jinja2.FileSystemLoader(r'C:\Users\PC User\PycharmProjects\gaybay\plantPassports\plantPassports\templates')
+template_loader = jinja2.FileSystemLoader(os.getcwd() + r'\templates')
 template_env = jinja2.Environment(loader=template_loader)
 template = template_env.get_template(r'passport_template.html')
-
-# C:\Program Files\wkhtmltopdf\bin
 
 config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
 
 
 class plant:
-    def __init__(self, botName):
-        self.order = "--"
-        self.family = "---"
-        self.parents = "--"
-        self.number = 0
+    def __init__(self, botName, family="MXX", parents="AA", ID=0):
+        self.family = family
+        self.genus = "--"
+        self.parents = parents
+        self.number = ID
 
         self.botName = botName
         self.passportNumber = "This is the passport"
@@ -41,8 +40,8 @@ class plant:
 
 
 class lithop(plant):
-    def __init__(self, botName):
-        super().__init__(botName)
+    def __init__(self, botName, family="MXX",parents="AA", ID=0):
+        super().__init__(botName, family=family, parents=parents, ID=ID)
         self.order = "LI"
 
 
@@ -55,3 +54,6 @@ p.printPassport()
 
 l = lithop("david")
 l.makeID()
+
+l2 = lithop("david", ID=99)
+l2.makeID()
